@@ -26,14 +26,8 @@ $continents = [
     ]
 ];
 
-echo 'Задание 1<hr>';
-
 foreach ($continents as $continent => $animals) {
-    echo '<h2>' . $continent . '</h2>';
-
-    foreach ($animals as $animal) {
-        echo $animal . ' ';
-    }
+	$one_word = explode(' ', $animals);
 }
-
+echo $one_word;
 ?>

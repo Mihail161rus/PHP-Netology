@@ -26,7 +26,7 @@ $continents = [
     ]
 ];
 
-echo 'Задание 2<br>';
+echo 'Задание 2<hr>';
 
 foreach ($continents as $continent => $animals) {
     $continents_two_word[$continent] = preg_grep("~\s{1}~", $animals);
