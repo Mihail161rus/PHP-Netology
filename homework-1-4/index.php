@@ -3,14 +3,20 @@ $json_array = file_get_contents('http://api.openweathermap.org/data/2.5/weather?
 $weatherArray = json_decode($json_array, true);
 
 $city_name = $weatherArray['name'];
-$temperature = round(((($weatherArray['main']['temp']) / 10) - 32) / 1.8);
-$atmo_pressure = round(($weatherArray['main']['pressure']) * 0.750064);
+$temp_far = $weatherArray['main']['temp'];
+$atmo_pressure_pa = $weatherArray['main']['pressure'];
 $humidity = $weatherArray['main']['humidity'];
-$wind_speed = round($weatherArray['wind']['speed'], 1);
-$sunrise = date_sunrise($weatherArray['sys']['sunrise']);
-$sunset = date_sunset($weatherArray['sys']['sunset']);
+$wind_speed = $weatherArray['wind']['speed'];
+$sunrise = $weatherArray['sys']['sunrise'];
+$sunset = $weatherArray['sys']['sunset'];
 $icon_weather = $weatherArray['weather'][0]['icon'];
 $weather_desc = $weatherArray['weather'][0]['description'];
+
+$temperature = round(((($temp_far) / 10) - 32) / 1.8);
+$atmo_pressure = round($atmo_pressure_pa * 0.750064);
+$wind_speed_view = round($wind_speed, 1);
+$sunrise_time = date_sunrise($sunrise);
+$sunset_time = date_sunset($sunset);
 $date_now = date('d M Y - G:i');
 ?>
 
@@ -57,15 +63,15 @@ $date_now = date('d M Y - G:i');
 		</tr>
 		<tr>
 			<td>Скорость ветра</td>
-			<td><?=$wind_speed?> м/с</td>
+			<td><?=$wind_speed_view?> м/с</td>
 		</tr>
 		<tr>
 			<td>Время восхода солнца</td>
-			<td><?=$sunrise?></td>
+			<td><?=$sunrise_time?></td>
 		</tr>
 		<tr>
 			<td>Время захода солнца</td>
-			<td><?=$sunset?></td>
+			<td><?=$sunset_time?></td>
 		</tr>
 	</table>
 </body>
