@@ -1,0 +1,47 @@
+{
+    "test_name": "Тест по математике",
+    "questions": {
+        "question1": {
+            "question": "Чему будет равен X в выражении X=5*7?",
+            "input_type": "radio",
+            "variants": [
+                "42",
+                "45",
+                "21",
+                "35"    
+            ],
+            "answers": [
+                "35"
+            ]
+        },
+        "question2": {
+            "question": "Чему будет равен X в выражении X=(9*9)-10?",
+            "input_type": "radio",
+            "variants": [
+                "81",
+                "71",
+                "100",
+                "74"
+            ],
+            "answers": [
+                "71"
+            ]
+        },
+        "question3": {
+            "question": "Выберите из списка четные числа",
+            "input_type": "checkbox",
+            "variants": [
+                "3",
+                "6",
+                "18",
+                "81",
+                "162"
+            ],
+            "answers": [
+                "6",
+                "18",
+                "162"
+            ]
+        }
+    } 
+}
