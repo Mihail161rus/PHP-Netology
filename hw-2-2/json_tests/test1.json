@@ -2,7 +2,7 @@
     "test_name": "Тест по географии",
     "questions": {
         "question1": {
-            "question": "Укажите столицу Англии",
+            "question_title": "Укажите столицу Англии",
             "input_type": "radio",
             "variants": [
                 "Рим",
@@ -15,7 +15,7 @@
             ]
         },
         "question2": {
-            "question": "Выберите из списка все города из США",
+            "question_title": "Выберите из списка все города из США",
             "input_type": "checkbox",
             "variants": [
                 "Сидней",
@@ -31,7 +31,7 @@
             ]
         },
         "question3": {
-            "question": "Выберите из списка названия рек",
+            "question_title": "Выберите из списка названия рек",
             "input_type": "checkbox",
             "variants": [
                 "Байкал",

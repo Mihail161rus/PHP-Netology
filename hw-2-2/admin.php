@@ -1,12 +1,6 @@
 <?php
-echo '<pre>';
-print_r($_FILES);
-print_r($_POST);
-echo '</pre>';
-
 $info_style = '';
 $info_text = '';
-
 
 if (isset($_FILES['test_file']) && !empty($_FILES['test_file']['name'])) {
 	$file = $_FILES['test_file'];
