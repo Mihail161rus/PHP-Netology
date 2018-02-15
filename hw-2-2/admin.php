@@ -1,3 +1,30 @@
+<?php
+echo '<pre>';
+print_r($_FILES);
+print_r($_POST);
+echo '</pre>';
+
+if (isset($_FILES['test_file']) && !empty($_FILES['test_file']['name'])) {
+	$file = $_FILES['test_file'];
+	$file_name = $_FILES['test_file']['name'];
+
+	if (($file['type'] == 'application/json') && $file['error'] == UPLOAD_ERR_OK && move_uploaded_file($file['tmp_name'], __DIR__ . "/json_tests/$file_name")) {
+	$info_style = 'color: green';
+	$info_text = 'Файл успешно загружен';
+}
+else {
+	$info_style = 'color: red';
+	$info_text = 'Файл не загружен. Файл должен иметь расширение JSON';
+}
+}
+else {
+	$info_style = 'color: red';
+	$info_text = 'Файл не выбран';
+}	
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,8 +33,18 @@
 </head>
 <body>
 	<h1>Модуль загрузки тестов</h1>
-	<form method="POST" action="/" enctype="multipart/form-data">
-		
+	<form method="POST" action="" enctype="multipart/form-data">
+		<fieldset>
+			<legend>Форма загрузки файлов</legend>
+			<label>
+				Файл:
+				<input name="test_file" type="file">
+			</label>
+			<div style="margin-top: 20px">
+				<input name="load_file" type="submit" value="Загрузить файл">
+			</div>
+			<p style="<?=$info_style?>"><?=$info_text?></p>
+		</fieldset>
 	</form>
 </body>
 </html>
