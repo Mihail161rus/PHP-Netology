@@ -8,13 +8,17 @@ if (isset($_GET['test_number'])) {
 	$test_title = $testArray['test_name'];
 	$test_questions = $testArray['questions'];
 
-	/*echo '<pre>';
+	echo '<pre>';
 	print_r($test_questions);
-	echo '</pre>';*/
+	echo '</pre>';
 }
 else {
 	echo '<p style="font-size: 20px;">Вы не выбрали тест на предыдущем шаге</p>';
 	echo '<p><a href="list.php">Вернуться к списку тестов</a></p>';
+}
+
+if (isset($_POST)) {
+
 }
 ?>
 
