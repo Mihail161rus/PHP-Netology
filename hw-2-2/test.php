@@ -1,32 +1,26 @@
 <?php 
 $dir_tests = __DIR__ . '/json_tests';
 $test_list = glob("$dir_tests/*.json");
+$info_text = '';
+$info_text_style = '';
+$user_answers = [];
+$errorSum = 0;
 
-if (isset($_GET['test_number'])) {
-	$test_number = $_GET['test_number'];
-	$testArray = json_decode(file_get_contents($test_list[$test_number]), 1);
-	$test_title = $testArray['test_name'];
-	$test_questions = $testArray['questions'];
-
-	echo '<pre>';
-	print_r($test_questions);
-	echo '</pre>';
-}
-else {
-	echo '<p style="font-size: 20px;">Вы не выбрали тест на предыдущем шаге</p>';
-	echo '<p><a href="list.php">Вернуться к списку тестов</a></p>';
+function submit_unset($var)
+{
+	if ($var == 'Проверить тест') {
+		return false;
+	}
+	return true;
 }
 
-if (isset($_POST)) {
-
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<title><?=$test_title?></title>
+	<title>Форма для прохождения теста</title>
 	<style>
 		form {
 			display: inline-block;
@@ -34,50 +28,91 @@ if (isset($_POST)) {
 	</style>
 </head>
 <body>
-	<h1><?=$test_title?></h1>
+	<?php
+	if (isset($_GET['test_number']) && ($_GET['test_number'] != NULL)) {
+		$test_number = $_GET['test_number'];
+		$testArray = json_decode(file_get_contents($test_list[$test_number]), 1);
+		$test_title = $testArray['test_name'];
+		$test_questions = $testArray['questions'];
+	?>	
+		<h1><?=$test_title?></h1>
 
-	<form method="POST" action="">
-		<?php
-		foreach ($test_questions as $key_question => $question) {
-			$question_title = $question['question_title'];
-			$input_type = $question['input_type'];
-			$question_variants = $question['variants'];
-		?>
-		<fieldset>
-			<legend><?=$question_title?></legend>
+		<form method="POST" action="">
 			<?php
-			foreach ($question_variants as $key_variant => $variant) {
+			foreach ($test_questions as $key_question => $question) {
+				$question_title = $question['question_title'];
+				$input_type = $question['input_type'];
+				$question_variants = $question['variants'];
+				$test_right_answers = $question['answers'];
 			?>
-			<label>
+			<fieldset style="<?=$fieldset_style?>">
+				<legend><?=$question_title?></legend>
 				<?php
-				if ($input_type == 'radio') { 
+				foreach ($question_variants as $key_variant => $variant) {
 				?>
-					<input name="<?=$key_question?>" value="<?=$variant?>" type="radio">
-				<?php 
-				}
-				elseif($input_type == 'checkbox') {
-				?>
-					<input name="<?=$key_question . "[]"?>" value="<?=$variant?>" type="checkbox">		
-				<?php 
-				}
-				?>		
+				<label>
+					<input name="<?=$key_question?>[]" value="<?=$variant?>" type="<?=$input_type?>">		
 					<?=$variant?>
-			</label>
-			<?php
-			}
+				</label>
+				<?php
+				
+				}
+
+				?>
+			</fieldset>
+			<?php 
+				if (isset($_POST['check_test'])) {
+					$user_answers = array_filter($_POST, 'submit_unset');
+					if (isset($_POST[$key_question])) {
+						$errorCount = count(array_diff($test_right_answers, $user_answers[$key_question]));
+						if ($errorCount == 0) {
+							$errorCount = false;
+						}	
+					}
+					else {
+						$errorCount = count($test_right_answers);
+					}
+					$errorSum = (is_numeric($errorCount)) ? $errorSum + $errorCount : $errorSum;					
+				}
+				if (isset($_POST['check_test']) && !isset($_POST[$key_question])) {
+					$info_text = 'тест не пройден, вы не ответили ни на один вопрос';
+					$info_text_style = 'color: red';
+				}
+				if (isset($_POST['check_test']) && !isset($_POST[$key_question]) && $errorSum > 0) {
+					$info_text = 'тест не пройден, допущено ошибок: ' . $errorSum . ' шт.';
+					$info_text_style = 'color: red';
+				}
+				if (!isset($_POST['check_test']) && $errorSum == 0) {
+					$info_text = 'для получения результата теста нужно ответить на вопросы';
+					$info_text_style = '';
+				}
+				if (isset($_POST['check_test']) && $errorSum == 0) {
+					$info_text = 'тест успешно пройден!';
+					$info_text_style = 'color: green;';
+				}
+				elseif (isset($_POST['check_test']) && isset($_POST[$key_question]) && $errorSum > 0) {
+					$info_text = 'тест не пройден, допущено ошибок: ' . $errorSum . ' шт.';
+					$info_text_style = 'color: red';
+				}		
+			}			
 			?>
-		</fieldset>
-		<?php 	
-		}
-		?>
-		<div style="margin-top: 20px">
-			<input name="check_test" type="submit" value="Проверить тест">
+			<div style="margin-top: 20px">
+				<input name="check_test" type="submit" value="Проверить тест">
+			</div>
+			<p style="<?=$info_text_style?>"><b>Результат теста:</b> <?=$info_text?></p>
+		</form>
+		<div style="margin-top: 20px;">
+			<a href="list.php"><= Вернуться к списку тестов</a>
 		</div>
-	</form>
+	<?php
+	}
+	else {
+		echo '<p style="font-size: 20px; color: red;">Вы не выбрали тест на предыдущем шаге</p>';
+		echo '<p><a href="list.php"><= Вернуться к списку тестов</a></p>';
+	}
+	echo '<pre>';
+	print_r($errorSum);
+	echo '</pre>';
+	?>	
 </body>
 </html>
-
-<?php
-echo '<pre>';
-print_r($_POST);
-?>
