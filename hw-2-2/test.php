@@ -55,16 +55,14 @@ function submit_unset($var)
 					<?=$variant?>
 				</label>
 				<?php
-				
 				}
-
 				?>
 			</fieldset>
 			<?php 
 				if (isset($_POST['check_test'])) {
 					$user_answers = array_filter($_POST, 'submit_unset');
 					if (isset($_POST[$key_question])) {
-						$errorCount = count(array_diff($test_right_answers, $user_answers[$key_question]));
+						$errorCount = count(array_diff($test_right_answers, $user_answers[$key_question])) + count(array_diff($user_answers[$key_question], $test_right_answers));
 						if ($errorCount == 0) {
 							$errorCount = false;
 						}	
@@ -73,10 +71,6 @@ function submit_unset($var)
 						$errorCount = count($test_right_answers);
 					}
 					$errorSum = (is_numeric($errorCount)) ? $errorSum + $errorCount : $errorSum;					
-				}
-				if (isset($_POST['check_test']) && !isset($_POST[$key_question])) {
-					$info_text = 'тест не пройден, вы не ответили ни на один вопрос';
-					$info_text_style = 'color: red';
 				}
 				if (isset($_POST['check_test']) && !isset($_POST[$key_question]) && $errorSum > 0) {
 					$info_text = 'тест не пройден, допущено ошибок: ' . $errorSum . ' шт.';
@@ -110,9 +104,6 @@ function submit_unset($var)
 		echo '<p style="font-size: 20px; color: red;">Вы не выбрали тест на предыдущем шаге</p>';
 		echo '<p><a href="list.php"><= Вернуться к списку тестов</a></p>';
 	}
-	echo '<pre>';
-	print_r($errorSum);
-	echo '</pre>';
 	?>	
 </body>
 </html>

@@ -21,5 +21,8 @@ $test_list = glob("$dir_tests/*.json");
 		}
 		?>
 	</ul>
+    <div style="margin-top: 20px">
+        <a href="admin.php"><= Загрузить новый тест</a>
+    </div>
 </body>
 </html>
