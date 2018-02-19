@@ -95,8 +95,7 @@ function submit_unset($var)
 				elseif (!isset($_POST['check_test']) && $errorSum == 0) {
 					$info_text = 'для получения результата теста нужно ответить на вопросы';
 					$info_text_style = '';
-				}
-						
+				}		
 			}			
 			?>
 			<div style="margin-top: 20px">
