@@ -40,6 +40,7 @@ function submit_unset($var)
 		<h1><?=$test_title?></h1>
 
 		<form method="POST" action="">
+			<h4>После прохождения теста можно получить сертификат, для этого необходимо обязательно заполнить поле "Имя"</h4>
 			<label>
 				<b>Укажите ваше имя</b> 
 				<input name="user_name" type="text">
@@ -51,7 +52,7 @@ function submit_unset($var)
 				$question_variants = $question['variants'];
 				$test_right_answers = $question['answers'];
 			?>
-			<fieldset style="margin-top: 15px;">
+			<fieldset style="margin-top: 25px;">
 				<legend><?=$question_title?></legend>
 				<?php
 				foreach ($question_variants as $key_variant => $variant) {
@@ -104,15 +105,15 @@ function submit_unset($var)
 			<p style="<?=$info_text_style?>"><b>Результат теста:</b> <?=$info_text?></p>
 		</form>
 		<?php
-		if (isset($_POST['check_test'])) {
+		if (isset($_POST['check_test']) && isset($_POST['user_name']) && ($_POST['user_name'] != NULL)) {
 		?>
-		<div>
+		<div style="margin-top: 20px;">
 			<a href="cert.php?user_name=<?=$user_name?>" target="_blank">Получить сертификат о прохождении теста =></a>
 		</div>
 		<?php
 		}
 		?>
-		<div style="margin-top: 20px;">
+		<div style="margin-top: 30px;">
 			<a href="list.php"><= Вернуться к списку тестов</a>
 		</div>
 	<?php

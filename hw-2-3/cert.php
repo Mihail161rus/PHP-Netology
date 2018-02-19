@@ -3,6 +3,7 @@ $header = 'Сертификат';
 $label_name = 'Выдан на имя:';
 $label_result = 'Результат теста:';
 $user_name = $_GET['user_name'];
+
 $image = imagecreatetruecolor(566, 800);
 $backColor = imagecolorallocate($image, 245, 245, 245);
 $redColor = imagecolorallocate($image, 255, 0, 0);
