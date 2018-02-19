@@ -5,6 +5,9 @@ $info_text = '';
 $info_text_style = '';
 $user_answers = [];
 $errorSum = 0;
+$test_number = $_GET['test_number'];
+krsort($test_list);
+$num_last_test = key($test_list);
 
 function submit_unset($var)
 {
@@ -29,8 +32,7 @@ function submit_unset($var)
 </head>
 <body>
 	<?php
-	if (isset($_GET['test_number']) && ($_GET['test_number'] != NULL)) {
-		$test_number = $_GET['test_number'];
+	if (isset($test_number) && ($test_number != NULL) && ($test_number <= $num_last_test)) {
 		$testArray = json_decode(file_get_contents($test_list[$test_number]), 1);
 		$test_title = $testArray['test_name'];
 		$test_questions = $testArray['questions'];
@@ -60,8 +62,8 @@ function submit_unset($var)
 			</fieldset>
 			<?php 
 				if (isset($_POST['check_test'])) {
-					$user_answers = array_filter($_POST, 'submit_unset');
 					if (isset($_POST[$key_question])) {
+						$user_answers = array_filter($_POST, 'submit_unset');
 						$errorCount = count(array_diff($test_right_answers, $user_answers[$key_question])) + count(array_diff($user_answers[$key_question], $test_right_answers));
 						if ($errorCount == 0) {
 							$errorCount = false;
@@ -70,23 +72,24 @@ function submit_unset($var)
 					else {
 						$errorCount = count($test_right_answers);
 					}
-					$errorSum = (is_numeric($errorCount)) ? $errorSum + $errorCount : $errorSum;					
+					$errorSum = (is_numeric($errorCount)) ? $errorSum + $errorCount : $errorSum;
+
+					if (!isset($_POST[$key_question]) && $errorSum > 0) {
+						$info_text = 'тест пройден, допущено ошибок: ' . $errorSum . ' шт.';
+						$info_text_style = 'color: red';
+					}
+					if (isset($_POST['check_test']) && $errorSum == 0) {
+						$info_text = 'тест пройден без ошибок';
+						$info_text_style = 'color: green;';
+					}
+					elseif (isset($_POST['check_test']) && isset($_POST[$key_question]) && $errorSum > 0) {
+						$info_text = 'тест пройден, допущено ошибок: ' . $errorSum . ' шт.';
+						$info_text_style = 'color: red';
+					}					
 				}
-				if (isset($_POST['check_test']) && !isset($_POST[$key_question]) && $errorSum > 0) {
-					$info_text = 'тест не пройден, допущено ошибок: ' . $errorSum . ' шт.';
-					$info_text_style = 'color: red';
-				}
-				if (!isset($_POST['check_test']) && $errorSum == 0) {
+				elseif (!isset($_POST['check_test']) && $errorSum == 0) {
 					$info_text = 'для получения результата теста нужно ответить на вопросы';
 					$info_text_style = '';
-				}
-				if (isset($_POST['check_test']) && $errorSum == 0) {
-					$info_text = 'тест успешно пройден!';
-					$info_text_style = 'color: green;';
-				}
-				elseif (isset($_POST['check_test']) && isset($_POST[$key_question]) && $errorSum > 0) {
-					$info_text = 'тест не пройден, допущено ошибок: ' . $errorSum . ' шт.';
-					$info_text_style = 'color: red';
 				}		
 			}			
 			?>
