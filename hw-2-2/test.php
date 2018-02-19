@@ -104,7 +104,7 @@ function submit_unset($var)
 	<?php
 	}
 	else {
-		echo '<p style="font-size: 20px; color: red;">Вы не выбрали тест на предыдущем шаге</p>';
+		echo '<p style="font-size: 20px; color: red;">Тест не найден или указан некорректный номер теста</p>';
 		echo '<p><a href="list.php"><= Вернуться к списку тестов</a></p>';
 	}
 	?>	
