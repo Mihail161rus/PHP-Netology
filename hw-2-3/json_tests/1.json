@@ -1,5 +1,6 @@
 {
     "test_name": "Тест по географии",
+    "sum_points": "60",
     "questions": {
         "question1": {
             "question_title": "Укажите столицу Англии",

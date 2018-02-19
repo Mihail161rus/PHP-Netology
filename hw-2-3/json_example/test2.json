@@ -1,5 +1,6 @@
 {
     "test_name": "Тест по математике",
+    "sum_points": "50",
     "questions": {
         "question1": {
             "question_title": "Чему будет равен X в выражении X=5*7?",

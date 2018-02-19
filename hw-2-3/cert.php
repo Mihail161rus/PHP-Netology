@@ -1,8 +1,11 @@
 <?php
 $header = 'Сертификат';
 $label_name = 'Выдан на имя:';
-$label_result = 'Результат теста:';
+$label_result = 'Оценка в баллах:';
+$label_sum_points = 'из';
 $user_name = $_GET['user_name'];
+$test_result = $_GET['test_result'];
+$sum_points = $_GET['sum_points'];
 
 $image = imagecreatetruecolor(566, 800);
 $backColor = imagecolorallocate($image, 245, 245, 245);
@@ -27,9 +30,12 @@ if (!file_exists($fontFile)) {
 }
 
 imagettftext($image, 46, 0, 110, 250, $redColor, $fontFile, $header);
-imagettftext($image, 24, 0, 60, 330, $blackColor, $fontFile, $label_name);
+imagettftext($image, 24, 0, 50, 330, $blackColor, $fontFile, $label_name);
 imagettftext($image, 24, 0, 310, 330, $blueColor, $fontFile, $user_name);
-imagettftext($image, 24, 0, 60, 480, $blackColor, $fontFile, $label_result);
+imagettftext($image, 24, 0, 50, 480, $blackColor, $fontFile, $label_result);
+imagettftext($image, 24, 0, 340, 480, $blueColor, $fontFile, $test_result);
+imagettftext($image, 24, 0, 390, 480, $blackColor, $fontFile, $label_sum_points);
+imagettftext($image, 24, 0, 440, 480, $blueColor, $fontFile, $sum_points);
 header('Content-Type: image/png');
 imagepng($image);
 ?>

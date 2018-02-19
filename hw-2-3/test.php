@@ -5,6 +5,7 @@ $info_text = '';
 $info_text_style = '';
 $user_answers = [];
 $errorSum = 0;
+$uncheckedRightSum = 0;
 $test_number = $_GET['test_number'];
 krsort($test_list);
 $num_last_test = key($test_list);
@@ -36,6 +37,7 @@ function submit_unset($var)
 		$testArray = json_decode(file_get_contents($test_list[$test_number]), 1);
 		$test_title = $testArray['test_name'];
 		$test_questions = $testArray['questions'];
+		$test_sum_points = $testArray['sum_points'];
 	?>	
 		<h1><?=$test_title?></h1>
 
@@ -73,12 +75,18 @@ function submit_unset($var)
 						$errorCount = count(array_diff($test_right_answers, $user_answers[$key_question])) + count(array_diff($user_answers[$key_question], $test_right_answers));
 						if ($errorCount == 0) {
 							$errorCount = false;
-						}	
+						}
+						$unchecked_right_answers = count(array_diff($test_right_answers, $user_answers[$key_question]));
+						if ($unchecked_right_answers == 0) {
+								$unchecked_right_answers = false;
+							}	
 					}
 					else {
 						$errorCount = count($test_right_answers);
+						$unchecked_right_answers = count($test_right_answers);
 					}
 					$errorSum = (is_numeric($errorCount)) ? $errorSum + $errorCount : $errorSum;
+					$uncheckedRightSum = (is_numeric($unchecked_right_answers)) ? $uncheckedRightSum + $unchecked_right_answers : $uncheckedRightSum;
 
 					if (!isset($_POST[$key_question]) && $errorSum > 0) {
 						$info_text = 'тест пройден, допущено ошибок: ' . $errorSum . ' шт.';
@@ -105,12 +113,17 @@ function submit_unset($var)
 			<p style="<?=$info_text_style?>"><b>Результат теста:</b> <?=$info_text?></p>
 		</form>
 		<?php
-		if (isset($_POST['check_test']) && isset($_POST['user_name']) && ($_POST['user_name'] != NULL)) {
+		if (isset($_POST['check_test'])) {
+			$test_result = $test_sum_points - ($uncheckedRightSum * 10);
+
+			if(isset($user_name) && ($user_name != NULL) && isset($test_result)) {
+			
 		?>
 		<div style="margin-top: 20px;">
-			<a href="cert.php?user_name=<?=$user_name?>" target="_blank">Получить сертификат о прохождении теста =></a>
+			<a href="cert.php?user_name=<?=$user_name?>&test_result=<?=$test_result?>&sum_points=<?=$test_sum_points?>" target="_blank">Получить сертификат о прохождении теста =></a>
 		</div>
 		<?php
+			}
 		}
 		?>
 		<div style="margin-top: 30px;">
