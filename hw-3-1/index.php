@@ -245,3 +245,100 @@ echo sprintf($formatDuck, $greyDuck->getSpecies(), $greyDuck->getColor(), $greyD
 echo '<br>';
 echo sprintf($formatDuck, $blackDuck->getSpecies(), $blackDuck->getColor(), $blackDuck->getAge());
 echo '<hr>';
+
+//Создаем класс продуктов
+
+class Product
+{
+    private $category;
+    private $vendor;
+    private $model;
+    private $color = 'черный';
+    private $price;
+    private $discount;
+    private $discountPrice;
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function setSilverColor()
+    {
+        $this->color = 'серебристый';
+    }
+
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getDiscountPrice()
+    {
+        switch ($this->category) {
+            case 'Фотокамера':
+                $discount = 15;
+                break;
+
+            case 'Сегвей':
+                $discount = 20;
+                break;
+
+            case 'Внешний аккумулятор':
+                $discount = 5;
+                break;
+            
+            default:
+                $discount = 0;
+                break;
+        }
+
+        return $this->discountPrice = ($this->price) - ($this->price * ($discount / 100));
+    }
+
+    public function __construct($category, $vendor, $model, $price)
+    {
+        $this->category = $category;
+        $this->vendor = $vendor;
+        $this->model = $model;
+        $this->price = $price;
+    }
+}
+
+//Создаем объеты товаров
+
+$smartphone = new Product('Смартфон', 'Apple', 'iPhone 7 Plus', 45000);
+$photo = new Product('Фотокамера', 'Canon', 'EOS1100D', 28000);
+$segway = new Product('Сегвей', 'Ninebot', 'Mini Pro', 34990);
+$powerBank = new Product('Внешний аккумулятор', 'Xiaomi', 'Mi Power Bank 2', 1400);
+$powerBank->setSilverColor();
+
+$formatProduct = '%s %s %s имеет %s цвет и продается по цене %d, если оформить заказ сегодня то цена со скидкой %d';
+
+echo sprintf($formatProduct, $smartphone->getCategory(), $smartphone->getVendor(), $smartphone->getModel(), 
+    $smartphone->getColor(), $smartphone->getPrice(), $smartphone->getDiscountPrice());
+echo '<br>';
+echo sprintf($formatProduct, $photo->getCategory(), $photo->getVendor(), $photo->getModel(), 
+    $photo->getColor(), $photo->getPrice(), $photo->getDiscountPrice());
+echo '<br>';
+echo sprintf($formatProduct, $segway->getCategory(), $segway->getVendor(), $segway->getModel(), 
+    $segway->getColor(), $segway->getPrice(), $segway->getDiscountPrice());
+echo '<br>';
+echo sprintf($formatProduct, $powerBank->getCategory(), $powerBank->getVendor(), $powerBank->getModel(), 
+    $powerBank->getColor(), $powerBank->getPrice(), $powerBank->getDiscountPrice());
+echo '<br><br><br><br><br>';
