@@ -1,0 +1,14 @@
+[
+	{
+		"login": "admin",
+		"password": "qq123",
+		"role": "admin",
+		"name": "Администратор"
+	},
+	{
+		"login": "guest",
+		"password": "",
+		"role": "user",
+		"name": "Гость"
+	}
+]

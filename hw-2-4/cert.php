@@ -1,11 +1,17 @@
 <?php
+session_start();
+if (empty($_SESSION)) {
+	header('Location: index.php');
+	exit;
+}
+
 $header = 'Сертификат';
-$label_name = 'Выдан на имя:';
-$label_result = 'Оценка в баллах:';
-$label_sum_points = 'из';
-$user_name = $_GET['user_name'];
-$test_result = $_GET['test_result'];
-$sum_points = $_GET['sum_points'];
+$labelName = 'Выдан на имя:';
+$labelResult = 'Оценка в баллах:';
+$labelSumPoints = 'из';
+$userName = $_GET['user_name'];
+$testResult = $_GET['test_result'];
+$sumPoints = $_GET['sum_points'];
 
 $image = imagecreatetruecolor(566, 800);
 $backColor = imagecolorallocate($image, 245, 245, 245);
@@ -30,12 +36,12 @@ if (!file_exists($fontFile)) {
 }
 
 imagettftext($image, 46, 0, 110, 250, $redColor, $fontFile, $header);
-imagettftext($image, 24, 0, 50, 330, $blackColor, $fontFile, $label_name);
-imagettftext($image, 24, 0, 310, 330, $blueColor, $fontFile, $user_name);
-imagettftext($image, 24, 0, 50, 480, $blackColor, $fontFile, $label_result);
-imagettftext($image, 24, 0, 340, 480, $blueColor, $fontFile, $test_result);
-imagettftext($image, 24, 0, 390, 480, $blackColor, $fontFile, $label_sum_points);
-imagettftext($image, 24, 0, 440, 480, $blueColor, $fontFile, $sum_points);
+imagettftext($image, 24, 0, 40, 330, $blackColor, $fontFile, $labelName);
+imagettftext($image, 24, 0, 285, 330, $blueColor, $fontFile, $userName);
+imagettftext($image, 24, 0, 40, 480, $blackColor, $fontFile, $labelResult);
+imagettftext($image, 24, 0, 340, 480, $blueColor, $fontFile, $testResult);
+imagettftext($image, 24, 0, 390, 480, $blackColor, $fontFile, $labelSumPoints);
+imagettftext($image, 24, 0, 440, 480, $blueColor, $fontFile, $sumPoints);
 header('Content-Type: image/png');
 imagepng($image);
 ?>
