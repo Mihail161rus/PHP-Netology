@@ -14,6 +14,11 @@ abstract class SuperClass
     {
         return $this->title;
     }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
 }
 
 //Создаем класс автомобиля
@@ -72,11 +77,6 @@ class Car extends SuperClass implements CarInterface
     public function getWheelsNumber()
     {
         return $this->wheelsNumber;
-    }
-
-    public function setColor($color)
-    {
-        $this->color = $color;
     }
 }
 
@@ -163,12 +163,13 @@ class TelevisionRemote extends SuperClass implements TvInterface
 
 $tvPanasonic = new TelevisionRemote('Panasonic HDTV-100');
 $tvPanasonic->setTvStanby('включить');
+$tvPanasonic->setColor('белый');
 $tvSony = new TelevisionRemote('Sony Bravia-200');
 
-$formatTv = 'Телевизор марки %s сейчас %s';
-echo sprintf($formatTv, $tvPanasonic->getTitle(), $tvPanasonic->getTvStanby());
+$formatTv = '%s телевизор марки %s сейчас %s';
+echo sprintf($formatTv, $tvPanasonic->getColor(), $tvPanasonic->getTitle(), $tvPanasonic->getTvStanby());
 echo '<br>';
-echo sprintf($formatTv, $tvSony->getTitle(), $tvSony->getTvStanby());
+echo sprintf($formatTv, $tvSony->getColor(), $tvSony->getTitle(), $tvSony->getTvStanby());
 echo '<hr>';
 
 //Создаем класс шариковая ручка
@@ -228,53 +229,41 @@ echo sprintf($formatPen, $parkerPen->getTitle(), $parkerPen->getInkColor(), $par
 echo '<hr>';
 
 //Создаем класс уток
-/*
-class Duck
+
+interface DuckInterface
 {
-    private $species;
+    public function getAge();
+    public function setColor($color);
+}
+
+class Duck extends SuperClass implements DuckInterface
+{
     private $age;
-    private $color = 'серого';
 
-    public function setSpecies()
+    public function getTitle()
     {
-        $speciesArray = ['Пекинская', 'Московская белая', 'Башкирская'];
-        shuffle($speciesArray);
-        $this->species = $speciesArray[0];
-    }
-
-    public function getSpecies()
-    {
-        return $this->species;
+        parent::getTitle();
+        $titleArray = ['Пекинская', 'Московская белая', 'Башкирская'];
+        shuffle($titleArray);
+        return $this->title = $titleArray[0];
     }
 
     public function getAge()
     {
         return $this->age = rand(2, 4);
     }
-
-    public function setBlackColor()
-    {
-        $this->color = 'черного';
-    }
-
-    public function getColor()
-    {
-        return $this->color;
-    }
 }
 
 //Создаем объекты уток
 
 $greyDuck = new Duck();
-$greyDuck->setSpecies();
+$greyDuck->setColor('серый');
 $blackDuck = new Duck();
-$blackDuck->setSpecies();
-$blackDuck->setBlackColor();
 
-$formatDuck = '%s утка %s цвета возрастом %d года';
-echo sprintf($formatDuck, $greyDuck->getSpecies(), $greyDuck->getColor(), $greyDuck->getAge());
+$formatDuck = '%s утка возрастом %d года имеет %s окрас';
+echo sprintf($formatDuck, $greyDuck->getTitle(), $greyDuck->getAge(), $greyDuck->getColor());
 echo '<br>';
-echo sprintf($formatDuck, $blackDuck->getSpecies(), $blackDuck->getColor(), $blackDuck->getAge());
+echo sprintf($formatDuck, $blackDuck->getTitle(), $blackDuck->getAge(), $blackDuck->getColor());
 echo '<hr>';
 
 //Создаем класс продуктов
@@ -282,9 +271,6 @@ echo '<hr>';
 class Product
 {
     private $category;
-    private $vendor;
-    private $model;
-    private $color = 'черный';
     private $price;
     private $discount;
     private $discountPrice;
@@ -292,21 +278,6 @@ class Product
     public function getCategory()
     {
         return $this->category;
-    }
-
-    public function getVendor()
-    {
-        return $this->vendor;
-    }
-
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    public function setSilverColor()
-    {
-        $this->color = 'серебристый';
     }
 
     public function getColor()
@@ -373,4 +344,3 @@ echo '<br>';
 echo sprintf($formatProduct, $powerBank->getCategory(), $powerBank->getVendor(), $powerBank->getModel(), 
     $powerBank->getColor(), $powerBank->getPrice(), $powerBank->getDiscountPrice());
 echo '<br><br><br><br><br>';
-*/
