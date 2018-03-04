@@ -97,10 +97,10 @@ $autoPen->setInkColor('красные');
 $parkerPen = new \Product\Pen('паркер', 350);
 $parkerPen->wrightWord();
 
-$formatPen = 'Ручка %s по цене %d руб. имеет %s чернила, остаточный уровень чернил %d процентов';
-echo sprintf($formatPen, $autoPen->getTitle(), $autoPen->getPrice(), $autoPen->getInkColor(), $autoPen->getInkLevel());
+$formatPen = '%s %s по цене %d руб. имеет %s чернила, остаточный уровень чернил %d процентов';
+echo sprintf($formatPen, $autoPen->getCategory(), $autoPen->getTitle(), $autoPen->getPrice(), $autoPen->getInkColor(), $autoPen->getInkLevel());
 echo '<br>';
-echo sprintf($formatPen, $parkerPen->getTitle(), $parkerPen->getPrice(), $parkerPen->getInkColor(), $parkerPen->getInkLevel());
+echo sprintf($formatPen, $parkerPen->getCategory(), $parkerPen->getTitle(), $parkerPen->getPrice(), $parkerPen->getInkColor(), $parkerPen->getInkLevel());
 echo '<hr>';
 
 echo '<h2>Создаем объекты уток</h2>';
@@ -115,3 +115,10 @@ echo '<br>';
 echo sprintf($formatDuck, $blackDuck->getTitle(), $blackDuck->getAge(),$blackDuck->getPrice(), $blackDuck->getColor());
 echo '<hr>';
 
+echo '<h2>Создаем объект powerbank</h2>';
+
+$powerbank = new \Product\PowerBank('Xiaomi Mi Powerbank 2 10000', 1400);
+
+$formatPowerbank = '%s %s по цене %d имеет %s цвет';
+echo sprintf($formatPowerbank, $powerbank->getCategory(), $powerbank->getTitle(), $powerbank->getPrice(), $powerbank->getColor());
+echo '<hr>';
