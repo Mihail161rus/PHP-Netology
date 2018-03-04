@@ -47,6 +47,8 @@ echo '<br>';
 echo '<b>Материал салона:</b> ' . $aveo->getInteriorType();
 echo '<br>';
 echo '<b>Комплектация:</b> ' . $aveo->getComplectation();
+echo '<br>';
+echo '<b>Цена авто:</b> ' . $aveo->getPrice();
 
 $camaro = new \Product\Car('Chevrolet Camaro', 2250000);
 $camaro->setBodyType('купе');
@@ -70,4 +72,46 @@ echo '<br>';
 echo '<b>Материал салона:</b> ' . $camaro->getInteriorType();
 echo '<br>';
 echo '<b>Комплектация:</b> ' . $camaro->getComplectation();
+echo '<br>';
+echo '<b>Цена авто:</b> ' . $camaro->getPrice();
 echo '<hr>';
+
+echo '<h2>Создаем объекты телевизоров</h2>';
+
+$tvPanasonic = new \Product\TelevisionRemote('Panasonic HDTV-100', 15000);
+$tvPanasonic->setTvStanby('включить');
+$tvPanasonic->setColor('белый');
+$tvSony = new \Product\TelevisionRemote('Sony Bravia-200', 21000);
+
+$formatTv = '%s телевизор марки %s по цене %d руб. сейчас %s';
+echo sprintf($formatTv, $tvPanasonic->getColor(), $tvPanasonic->getTitle(),$tvPanasonic->getPrice(), $tvPanasonic->getTvStanby());
+echo '<br>';
+echo sprintf($formatTv, $tvSony->getColor(), $tvSony->getTitle(), $tvSony->getPrice(), $tvSony->getTvStanby());
+echo '<hr>';
+
+echo '<h2>Создаем объкты ручек</h2>';
+
+$autoPen = new \Product\Pen('автоматическая', 45);
+$autoPen->wrightWord();
+$autoPen->setInkColor('красные');
+$parkerPen = new \Product\Pen('паркер', 350);
+$parkerPen->wrightWord();
+
+$formatPen = 'Ручка %s по цене %d руб. имеет %s чернила, остаточный уровень чернил %d процентов';
+echo sprintf($formatPen, $autoPen->getTitle(), $autoPen->getPrice(), $autoPen->getInkColor(), $autoPen->getInkLevel());
+echo '<br>';
+echo sprintf($formatPen, $parkerPen->getTitle(), $parkerPen->getPrice(), $parkerPen->getInkColor(), $parkerPen->getInkLevel());
+echo '<hr>';
+
+echo '<h2>Создаем объекты уток</h2>';
+
+$greyDuck = new \Product\Duck('Пекинская', 500);
+$greyDuck->setColor('серый');
+$blackDuck = new \Product\Duck('Башкирская', 350);
+
+$formatDuck = '%s утка возрастом %d года по цене %d руб. имеет %s окрас';
+echo sprintf($formatDuck, $greyDuck->getTitle(), $greyDuck->getAge(), $greyDuck->getPrice(), $greyDuck->getColor());
+echo '<br>';
+echo sprintf($formatDuck, $blackDuck->getTitle(), $blackDuck->getAge(),$blackDuck->getPrice(), $blackDuck->getColor());
+echo '<hr>';
+

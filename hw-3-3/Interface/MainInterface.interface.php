@@ -6,6 +6,5 @@ interface MainInterface
     public function getPrice();
     public function getColor();
     public function setColor($color);
-    public function getDiscountPrice();
     public function __construct($title, $price);
 }

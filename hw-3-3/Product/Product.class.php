@@ -8,7 +8,6 @@ abstract class Product implements \MainInterface
 	protected $color = 'черный';
 	protected $price;
 	protected $discount;
-    protected $discountPrice;
 
     public function getTitle()
     {
@@ -32,11 +31,6 @@ abstract class Product implements \MainInterface
 
     public function getPrice()
     {
-    	return $this->price;
-    }
-
-    public function getDiscountPrice()
-    {
         switch ($this->category) {
             case 'Автомобиль':
                 $discount = 15;
@@ -49,13 +43,13 @@ abstract class Product implements \MainInterface
             case 'Внешний аккумулятор':
                 $discount = 5;
                 break;
-            
+
             default:
                 $discount = 0;
                 break;
         }
 
-        return $this->discountPrice = ($this->price) - ($this->price * ($discount / 100));
+        return $this->price = ($this->price) - ($this->price * ($discount / 100));
     }
 
     public function __construct($title, $price)
