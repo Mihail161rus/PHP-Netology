@@ -24,7 +24,7 @@ function autoloadInterface($interfaceName)
 spl_autoload_register('autoloadClass');
 spl_autoload_register('autoloadInterface');
 
-echo '<h2>Создаем 2 объекта машины</h2>';
+echo '<h2>Создаем объекты машин</h2>';
 
 $aveo = new \Product\Car('Chevrolet Aveo', 570000);
 $aveo->setBodyType('седан');
