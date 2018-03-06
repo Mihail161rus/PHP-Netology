@@ -18,6 +18,26 @@ class Basket implements \BasketInterface
         }
     }
 
+    public function deleteFromCart($product)
+    {
+        if(array_key_exists($product->getCode(), $this->productsList)) {
+            unset($this->productsList[$product->getCode()]);
+            echo '<p style="color: red">Товар ' . $product->getTitle() . ' удален из корзины</p>';
+        }
+        else {
+            echo '<p>Товар в корзине не найден</p>';
+        }
+    }
+
+    public function getTotalSum()
+    {
+        $totalSum = 0;
+        foreach($this->productsList as $product) {
+            $totalSum += $product->getPrice() * $product->quantity;
+        }
+        return $totalSum;
+    }
+
     public function getProductsList()
     {
         if(count($this->productsList) === 0) {
@@ -43,12 +63,10 @@ class Basket implements \BasketInterface
                 echo '<td>' . $product->getPrice() * $product->quantity . '</td>';
                 echo '</tr>';
             }
+            echo '<tr>';
+            echo '<td colspan="6"><b>Общая сумма корзины:</b> ' . $this->getTotalSum() . '</td>';
+            echo '</tr>';
             echo '</table>';
         }
-    }
-
-    public function getProducts()
-    {
-        return $this->productsList;
     }
 }

@@ -156,6 +156,11 @@ $basket->addToCart($tvSony, 2);
 $basket->addToCart($powerbank, 10);
 $basket->addToCart($aveo, 2);
 $basket->getProductsList();
+
+echo '<h2>Удаляем из корзины телевизор Сони и выводим содержимое корзины</h2>';
+
+$basket->deleteFromCart($tvSony);
+$basket->getProductsList();
 echo '<pre>';
 print_r($basket->getProducts());
 ?>
