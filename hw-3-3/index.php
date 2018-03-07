@@ -102,7 +102,7 @@ echo '<h2>Создаем объекты телевизоров</h2>';
 $tvPanasonic = new \Product\TelevisionRemote(120, 'Panasonic HDTV-100', 15000);
 $tvPanasonic->setTvStanby('включить');
 $tvPanasonic->setColor('белый');
-$tvSony = new \Product\TelevisionRemote(152, 'Sony Bravia-200', 21000);
+$tvSony = new \Product\TelevisionRemote(152, 'Sony Bravia-200', '');
 $tvSony->setDiscount(10);
 
 $formatTv = '%s телевизор марки %s по цене %d руб. сейчас %s';
@@ -149,19 +149,25 @@ echo '<hr>';
 echo '<h2>Создаем корзину и кладем в нее товары</h2>';
 
 $basket = new \Basket\Basket();
-$basket->addToCart($aveo);
-$basket->addToCart($camaro);
-$basket->addToCart($parkerPen, 5);
-$basket->addToCart($tvSony, 2);
-$basket->addToCart($powerbank, 10);
-$basket->addToCart($aveo, 2);
-$basket->addToCart($greyDuck);
+try {
+    $basket->addToCart($aveo);
+    $basket->addToCart($camaro);
+    $basket->addToCart($parkerPen, 5);
+    $basket->addToCart($tvSony, 2);
+    $basket->addToCart($powerbank, 10);
+    $basket->addToCart($aveo, 2);
+    $basket->addToCart($greyDuck);
+}
+catch(Basket\MyException $e) {
+    echo $e->getMessage();
+}
+
 $basket->printProductsList();
 echo '<hr>';
 
 echo '<h2>Удаляем из корзины телевизор Сони и выводим содержимое корзины</h2>';
 
-$basket->deleteFromCart($tvSony);
+$basket->deleteFromCart($greyDuck);
 $basket->printProductsList();
 echo '<hr>';
 

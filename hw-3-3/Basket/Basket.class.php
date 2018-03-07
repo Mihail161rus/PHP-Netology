@@ -7,13 +7,17 @@ class Basket implements \BasketInterface
 
     public function addToCart($product, $quantity = 1)
     {
-        if(array_key_exists($product->getCode(), $this->productsList)) {
-            $addedProduct = $this->productsList[$product->getCode()];
-            $addedProductQuantity = $addedProduct->quantity + $quantity;
-            $product->quantity = $addedProductQuantity;
+        if(empty($product->getPrice())) {
+            throw new MyException('<h4 style="color: red">У добавляемого товара ' . $product->getTitle() . ' отсутствует цена. Товар не был добавлен в корзину!</h4>');
         } else {
-            $this->productsList[$product->getCode()] = $product;
-            $product->quantity = $quantity;
+            if(array_key_exists($product->getCode(), $this->productsList)) {
+                $addedProduct = $this->productsList[$product->getCode()];
+                $addedProductQuantity = $addedProduct->quantity + $quantity;
+                $product->quantity = $addedProductQuantity;
+            } else {
+                $this->productsList[$product->getCode()] = $product;
+                $product->quantity = $quantity;
+            }
         }
     }
 
