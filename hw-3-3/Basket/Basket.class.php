@@ -11,8 +11,7 @@ class Basket implements \BasketInterface
             $addedProduct = $this->productsList[$product->getCode()];
             $addedProductQuantity = $addedProduct->quantity + $quantity;
             $product->quantity = $addedProductQuantity;
-        }
-        else {
+        } else {
             $this->productsList[$product->getCode()] = $product;
             $product->quantity = $quantity;
         }
@@ -23,8 +22,7 @@ class Basket implements \BasketInterface
         if(array_key_exists($product->getCode(), $this->productsList)) {
             unset($this->productsList[$product->getCode()]);
             echo '<p style="color: red">Товар ' . $product->getTitle() . ' удален из корзины</p>';
-        }
-        else {
+        } else {
             echo '<p>Товар в корзине не найден</p>';
         }
     }
@@ -40,10 +38,14 @@ class Basket implements \BasketInterface
 
     public function getProductsList()
     {
-        if(count($this->productsList) === 0) {
+        return $this->productsList;
+    }
+
+    public function printProductsList()
+    {
+        if(count($this->getProductsList()) === 0) {
             echo '<h4>Ваша корзина пуста</h4>';
-        }
-        else {
+        } else {
             echo '<table>';
             echo '<tr>';
             echo '<th>Код товара</th>';

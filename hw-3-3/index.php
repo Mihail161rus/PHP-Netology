@@ -155,14 +155,21 @@ $basket->addToCart($parkerPen, 5);
 $basket->addToCart($tvSony, 2);
 $basket->addToCart($powerbank, 10);
 $basket->addToCart($aveo, 2);
-$basket->getProductsList();
+$basket->addToCart($greyDuck);
+$basket->printProductsList();
+echo '<hr>';
 
 echo '<h2>Удаляем из корзины телевизор Сони и выводим содержимое корзины</h2>';
 
 $basket->deleteFromCart($tvSony);
-$basket->getProductsList();
-echo '<pre>';
-print_r($basket->getProducts());
+$basket->printProductsList();
+echo '<hr>';
+
+echo '<h2>Страница заказа</h2>';
+
+$order = new \Order\Order($basket);
+$order->changeOrderStatus(rand(1,4));
+$order->printOrderInfo();
 ?>
 </body>
 </html>

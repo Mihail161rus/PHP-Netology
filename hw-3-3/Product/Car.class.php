@@ -35,8 +35,7 @@ class Car extends Product
     {
         if ($this->bodyType == 'седан' || $this->bodyType == 'хетчбек') {
             return $this->doorsNumber = 4;
-        }
-        elseif ($this->bodyType == 'купе') {
+        } elseif ($this->bodyType == 'купе') {
             return $this->doorsNumber = 2;
         }
     }
@@ -50,8 +49,7 @@ class Car extends Product
     {
         if ($this->complectationType == 'стандарт') {
             return $this->complectation = 'кондиционер, 2 AIRBAG, передние стеклоподъемники';
-        }
-        elseif ($this->complectationType == 'люкс') {
+        } elseif ($this->complectationType == 'люкс') {
             return $this->complectation = 'кондиционер, 4 AIRBAG, полный электропакет, подогрев сидений, автомагнитола';
         }
     }

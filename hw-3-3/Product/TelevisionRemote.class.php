@@ -17,8 +17,7 @@ class TelevisionRemote extends Product
     {
         if ($stanby === 'включить') {
             return $this->stanby = self::STANBY_ON;
-        }
-        elseif ($stanby === 'выключить') {
+        } elseif ($stanby === 'выключить') {
             return $this->stanby = self::STANBY_OFF;
         }
     }
