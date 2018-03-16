@@ -3,12 +3,16 @@ namespace Product;
 
 abstract class Product implements \MainInterface
 {
-	protected $title;
-	protected $category;
-	protected $color = 'черный';
-	protected $price;
-	protected $discount;
-    protected $discountPrice;
+    protected $code;
+    protected $title;
+    protected $category;
+    protected $color = 'черный';
+    protected $price;
+
+    public function getCode()
+    {
+        return $this->code;
+    }
 
     public function getTitle()
     {
@@ -17,7 +21,7 @@ abstract class Product implements \MainInterface
 
     public function getCategory()
     {
-    	return $this->category;
+        return $this->category;
     }
 
     public function getColor()
@@ -30,36 +34,19 @@ abstract class Product implements \MainInterface
         $this->color = $color;
     }
 
+    public function setDiscount($discount)
+    {
+        $this->price = ($this->price) - ($this->price * ($discount / 100));
+    }
+
     public function getPrice()
     {
-    	return $this->price;
+        return $this->price;
     }
 
-    public function getDiscountPrice()
+    public function __construct($code, $title, $price)
     {
-        switch ($this->category) {
-            case 'Автомобиль':
-                $discount = 15;
-                break;
-
-            case 'Ручка':
-                $discount = 20;
-                break;
-
-            case 'Внешний аккумулятор':
-                $discount = 5;
-                break;
-            
-            default:
-                $discount = 0;
-                break;
-        }
-
-        return $this->discountPrice = ($this->price) - ($this->price * ($discount / 100));
-    }
-
-    public function __construct($title, $price)
-    {
+        $this->code = $code;
         $this->title = $title;
         $this->price = $price;
     }
