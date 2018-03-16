@@ -4,10 +4,10 @@ namespace Product;
 abstract class Product implements \MainInterface
 {
     protected $code;
-    protected $title;
-    protected $category;
-    protected $color = 'черный';
-    protected $price;
+	protected $title;
+	protected $category;
+	protected $color = 'черный';
+	protected $price;
 
     public function getCode()
     {
@@ -21,7 +21,7 @@ abstract class Product implements \MainInterface
 
     public function getCategory()
     {
-        return $this->category;
+    	return $this->category;
     }
 
     public function getColor()
